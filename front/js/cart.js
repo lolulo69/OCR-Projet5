@@ -147,3 +147,76 @@ function deleteItem() {
     }
 
 }
+
+
+const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð .'-]+$/u;
+const regexAddress = /[0-9bis,]+[\s]+[a-zA-Z0-9\s,.'-]/;
+const regexEmail = /[a-zA-Z1-9.-_]+[@]+[a-zA-Z1-9.-_]+[.]+[a-zA-Z]/;
+
+
+const formFirstName = document.getElementById("firstName");
+const formLastName = document.getElementById("lastName");
+const formAddress = document.getElementById("address");
+const formCity = document.getElementById("city");
+const formEmail = document.getElementById("email");
+
+
+formFirstName.addEventListener("change", checkFirstName);
+formLastName.addEventListener("change", checkLastName);
+formAddress.addEventListener("change", checkAddress);
+formCity.addEventListener("change", checkCity);
+formEmail.addEventListener("change", checkEmail);
+
+
+function checkFirstName() {
+    if (regex.test(formFirstName.value)) {
+        document.getElementById("firstNameErrorMsg").innerText = "Oui";
+        return true;
+    }else{
+        document.getElementById("firstNameErrorMsg").innerText = "Non";
+        return false;
+    }
+}
+
+function checkLastName() {
+    if (regex.test(formLastName.value)) {
+        document.getElementById("lastNameErrorMsg").innerText = "Oui";
+        return true;
+    }else{
+        document.getElementById("lastNameErrorMsg").innerText = "Non";
+        return false;
+    }
+}
+
+function checkAddress() {
+    if (regexAddress.test(formAddress.value)) {
+        document.getElementById("addressErrorMsg").innerText = "Oui";
+        return true;
+    }else{
+        document.getElementById("addressErrorMsg").innerText = "Non";
+        return false;
+    }
+}
+
+function checkCity() {
+    if (regex.test(formCity.value)) {
+        document.getElementById("cityErrorMsg").innerText = "Oui";
+        return true;
+    }else{
+        document.getElementById("cityErrorMsg").innerText = "Non";
+        return false;
+    }
+}
+
+function checkEmail() {
+    if (regexEmail.test(formEmail.value)) {
+        document.getElementById("emailErrorMsg").innerText = "Oui";
+        return true;
+    }else{
+        document.getElementById("emailErrorMsg").innerText = "Non";
+        return false;
+    }
+}
+
+
+
