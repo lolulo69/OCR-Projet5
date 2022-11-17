@@ -149,16 +149,20 @@ function deleteItem() {
 }
 
 
+//Déclaration des variables de regex qui servent à tester les entrées faites dans le formulaire
 const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð .'-]+$/u;
 const regexAddress = /[0-9bis,]+[\s]+[a-zA-Z0-9\s,.'-]/;
 const regexEmail = /[a-zA-Z1-9.-_]+[@]+[a-zA-Z1-9.-_]+[.]+[a-zA-Z]/;
 
 
+//On cible les éléments du formulaire et on ajoute les eventlistener
 const formFirstName = document.getElementById("firstName");
 const formLastName = document.getElementById("lastName");
 const formAddress = document.getElementById("address");
 const formCity = document.getElementById("city");
 const formEmail = document.getElementById("email");
+
+const formOrderButton = document.getElementById("order");
 
 
 formFirstName.addEventListener("change", checkFirstName);
@@ -167,7 +171,10 @@ formAddress.addEventListener("change", checkAddress);
 formCity.addEventListener("change", checkCity);
 formEmail.addEventListener("change", checkEmail);
 
+formOrderButton.addEventListener("click", order);
 
+
+//Ces fonctions servent à tester les entrées faites dans le formulaire par le client
 function checkFirstName() {
     if (regex.test(formFirstName.value)) {
         document.getElementById("firstNameErrorMsg").innerText = "Oui";
@@ -219,4 +226,46 @@ function checkEmail() {
 }
 
 
+//Cette fonction vérifie et envoie les données du client et du panier au serveur, puis redirige le client en confirmant la commande
+function order(e) {
+    e.preventDefault();
 
+    if (checkFirstName() && checkLastName() && checkAddress() && checkCity() && checkEmail() === true) {
+        if (basket.length > 0) {
+            let contact = {
+                firstName : formFirstName.value,
+                lastName : formLastName.value,
+                address : formAddress.value,
+                city : formCity.value,
+                email : formEmail.value
+            }
+            let products = [];
+            for (let product of basket) {
+                productId = product.id;
+                products.push(productId);
+            }
+            let toPost = {contact, products};
+            console.log(toPost);
+            fetch("http://localhost:3000/api/products/order", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(toPost)
+            })
+            .then((res) => res.json())
+            .then((data) => {         
+                localStorage.clear();
+                window.location.href = "./confirmation.html?id=" + data.orderId;
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Une erreur est survenue");
+            });
+        }else{
+            alert("Votre panier est vide.");
+        }
+    }else{
+        alert("Merci de remplir le formulaire correctement.");
+    }
+}
