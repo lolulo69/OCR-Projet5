@@ -80,28 +80,36 @@ function storeColor(value) {
 function addToBasket(event) {
     event.stopPropagation();
 
-    let basket = JSON.parse(localStorage.getItem("basket") || "[]");
+    if (quantity > 0 && quantity <= 100) {
+        let basket = JSON.parse(localStorage.getItem("basket") || "[]");
 
-    let order = {
-        id: id, 
-        quantity: quantity,
-        color: selectedColor
-    };
-    for(let element of basket) {
-        if(element.id == id && element.color == selectedColor) {
-            alreadyAdded = true;
-            let total = quantity*1+element.quantity*1;
-            element.quantity = total;
-            localStorage.setItem("basket", JSON.stringify(basket));
-        }else{
-            alreadyAdded = false;
+        let order = {
+            id: id, 
+            quantity: quantity,
+            color: selectedColor
+        };
+        for(let element of basket) {
+            if(element.id == id && element.color == selectedColor) {
+                alreadyAdded = true;
+                let total = quantity*1+element.quantity*1;
+                element.quantity = total;
+                localStorage.setItem("basket", JSON.stringify(basket));
+                alert("Votre produit a bien été ajouté au panier");
+            }else{
+                alreadyAdded = false;
+            }
         }
-    }
 
-    if(alreadyAdded === true) {
-        return
+        if(alreadyAdded === true) {
+            return
+        }else{
+            basket.push(order);
+            localStorage.setItem("basket", JSON.stringify(basket));
+            alert("Votre produit a bien été ajouté au panier");
+        }
     }else{
-        basket.push(order);
-        localStorage.setItem("basket", JSON.stringify(basket));
+        alert("Merci de choisir une quantité valide.");
+        return
     }
+    
 }

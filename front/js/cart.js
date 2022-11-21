@@ -119,7 +119,6 @@ function modifyQuantity() {
     article = this.closest("article.cart__item");
     id = article.getAttribute("data-id");
     color = article.getAttribute("data-color");
-    console.log(id + " " + color + " " + this.value);
     for(let element of basket) {
         if(id == element.id && color == element.color) {
             element.quantity = 1*this.value;
@@ -135,7 +134,6 @@ function deleteItem() {
     article = this.closest("article.cart__item");
     id = article.getAttribute("data-id");
     color = article.getAttribute("data-color");
-    console.log(id + " " + color);
     for(let element of basket) {
         if(id == element.id && color == element.color) {
             basket = basket.filter(item => item != element);
@@ -151,6 +149,7 @@ function deleteItem() {
 
 //Déclaration des variables de regex qui servent à tester les entrées faites dans le formulaire
 const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð .'-]+$/u;
+const regexName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð .'-]{2,}/u;
 const regexAddress = /[0-9bis,]+[\s]+[a-zA-Z0-9\s,.'-]/;
 const regexEmail = /[a-zA-Z1-9.-_]+[@]+[a-zA-Z1-9.-_]+[.]+[a-zA-Z]/;
 
@@ -176,7 +175,7 @@ formOrderButton.addEventListener("click", order);
 
 //Ces fonctions servent à tester les entrées faites dans le formulaire par le client
 function checkFirstName() {
-    if (regex.test(formFirstName.value)) {
+    if (regexName.test(formFirstName.value)) {
         document.getElementById("firstNameErrorMsg").innerText = "";
         return true;
     }else{
@@ -186,7 +185,7 @@ function checkFirstName() {
 }
 
 function checkLastName() {
-    if (regex.test(formLastName.value)) {
+    if (regexName.test(formLastName.value)) {
         document.getElementById("lastNameErrorMsg").innerText = "";
         return true;
     }else{
@@ -245,7 +244,6 @@ function order(e) {
                 products.push(productId);
             }
             let toPost = {contact, products};
-            console.log(toPost);
             fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             headers: {
