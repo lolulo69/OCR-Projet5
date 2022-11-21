@@ -177,50 +177,50 @@ formOrderButton.addEventListener("click", order);
 //Ces fonctions servent à tester les entrées faites dans le formulaire par le client
 function checkFirstName() {
     if (regex.test(formFirstName.value)) {
-        document.getElementById("firstNameErrorMsg").innerText = "Oui";
+        document.getElementById("firstNameErrorMsg").innerText = "";
         return true;
     }else{
-        document.getElementById("firstNameErrorMsg").innerText = "Non";
+        document.getElementById("firstNameErrorMsg").innerText = "Veuillez entrer un prénom valide";
         return false;
     }
 }
 
 function checkLastName() {
     if (regex.test(formLastName.value)) {
-        document.getElementById("lastNameErrorMsg").innerText = "Oui";
+        document.getElementById("lastNameErrorMsg").innerText = "";
         return true;
     }else{
-        document.getElementById("lastNameErrorMsg").innerText = "Non";
+        document.getElementById("lastNameErrorMsg").innerText = "Veuillez entrer un nom valide";
         return false;
     }
 }
 
 function checkAddress() {
     if (regexAddress.test(formAddress.value)) {
-        document.getElementById("addressErrorMsg").innerText = "Oui";
+        document.getElementById("addressErrorMsg").innerText = "";
         return true;
     }else{
-        document.getElementById("addressErrorMsg").innerText = "Non";
+        document.getElementById("addressErrorMsg").innerText = "Veuillez entrer une adresse existante";
         return false;
     }
 }
 
 function checkCity() {
     if (regex.test(formCity.value)) {
-        document.getElementById("cityErrorMsg").innerText = "Oui";
+        document.getElementById("cityErrorMsg").innerText = "";
         return true;
     }else{
-        document.getElementById("cityErrorMsg").innerText = "Non";
+        document.getElementById("cityErrorMsg").innerText = "La ville spécifiée n'est pas reconnue";
         return false;
     }
 }
 
 function checkEmail() {
     if (regexEmail.test(formEmail.value)) {
-        document.getElementById("emailErrorMsg").innerText = "Oui";
+        document.getElementById("emailErrorMsg").innerText = "";
         return true;
     }else{
-        document.getElementById("emailErrorMsg").innerText = "Non";
+        document.getElementById("emailErrorMsg").innerText = "Veuillez entrer une adresse email valide";
         return false;
     }
 }
